@@ -15,6 +15,8 @@ public class CloneCommandStep extends liquibase.command.AbstractCommandStep {
     public static final CommandArgumentDefinition<String> COMMIT_ARG;
     public static final CommandArgumentDefinition<Boolean> DISABLE_PORT_FLAG;
     public static final CommandArgumentDefinition<String> NAME_ARG;
+    public static final CommandArgumentDefinition<String> PARAMETERS;
+    public static final CommandArgumentDefinition<String> TAGS;
 
     private final CommandExecutor CE = new CommandExecutor(Scope.getCurrentScope().getUI());
 
@@ -23,6 +25,9 @@ public class CloneCommandStep extends liquibase.command.AbstractCommandStep {
         COMMIT_ARG = builder.argument("commit", String.class).build();
         DISABLE_PORT_FLAG = builder.argument("disablePortMapping", Boolean.class).build();
         NAME_ARG = builder.argument("name", String.class).build();
+        PARAMETERS = builder.argument("parameters", String.class).build();
+        TAGS = builder.argument("tags", String.class).build();
+
         //-p, --parameters strings     provider specific parameters. key=value format
         //-t, --tags strings           filter latest commit by tags
     }

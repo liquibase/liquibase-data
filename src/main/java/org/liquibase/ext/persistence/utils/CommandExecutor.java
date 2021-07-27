@@ -55,13 +55,12 @@ public class CommandExecutor {
 
             if (process.exitValue() != 0) {
                 BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                StringBuilder errorBuilder = new StringBuilder();
                 String errLine;
                 while ( (errLine = errReader.readLine()) != null) {
                     this.ui.sendErrorMessage(errLine);
                     this.ui.sendErrorMessage(System.getProperty("line.separator"));
                 }
-                throw new IOException("Command failed: " + this.stringify(args) + ": " + errorBuilder);
+                throw new IOException("Command failed: " + this.stringify(args) + ": " + "");
             }
             if (SystemUtils.IS_OS_WINDOWS) {
                 process.waitFor(this.duration, this.unit);
