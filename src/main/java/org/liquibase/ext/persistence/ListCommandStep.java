@@ -3,7 +3,9 @@ package org.liquibase.ext.persistence;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class ListCommandStep extends liquibase.command.AbstractCommandStep {
+import java.util.List;
+
+public class ListCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "ls" };
 
@@ -19,6 +21,7 @@ public class ListCommandStep extends liquibase.command.AbstractCommandStep {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
-
+        List<String> args = CE.BuildArgs("titan", "ls");
+        CE.exec(args);
     }
 }

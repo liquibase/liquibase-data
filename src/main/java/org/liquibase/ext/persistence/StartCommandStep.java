@@ -5,7 +5,9 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class StartCommandStep extends liquibase.command.AbstractCommandStep {
+import java.util.List;
+
+public class StartCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "start" };
     public static final CommandArgumentDefinition<String> REPO;
@@ -28,6 +30,8 @@ public class StartCommandStep extends liquibase.command.AbstractCommandStep {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
-
+        String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
+        List<String> args = CE.BuildArgs("titan", "start", repo);
+        CE.exec(args);
     }
 }

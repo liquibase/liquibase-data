@@ -6,6 +6,8 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +28,10 @@ public class CommandExecutor {
         this.ui = ui;
         this.duration = 10L;
         this.unit = TimeUnit.MINUTES;
+    }
+
+    public List<String> BuildArgs(String... args) {
+        return new ArrayList<>(Arrays.asList(args));
     }
 
     public void exec(List args) throws InterruptedException, IOException {
