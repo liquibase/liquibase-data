@@ -5,10 +5,11 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class MigrateCommandStep extends liquibase.command.AbstractCommandStep {
+public class CopyCommandStep extends liquibase.command.AbstractCommandStep {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "migrate" };
+    public static final String[] COMMAND_NAME = new String[]{ "titan", "cp" };
     public static final CommandArgumentDefinition<String> REPO;
+    public static final CommandArgumentDefinition<String> DESTINATION;
     public static final CommandArgumentDefinition<String> SOURCE;
 
     static {
@@ -17,15 +18,18 @@ public class MigrateCommandStep extends liquibase.command.AbstractCommandStep {
                 .description("name of the target repository")
                 .required()
                 .build();
+        DESTINATION = builder.argument("destination", String.class)
+                .description("destination of the files inside of the container")
+                .build();
         SOURCE = builder.argument("source", String.class)
-                .description("source docker database container (required)")
+                .description("source location of the files on the local machine (required)")
                 .required()
                 .build();
     }
 
     @Override
     public void adjustCommandDefinition(CommandDefinition commandDefinition) {
-        commandDefinition.setShortDescription("Migrate an existing docker database container to titan repository.");
+        commandDefinition.setShortDescription("Copy data into a repository");
     }
 
     @Override
