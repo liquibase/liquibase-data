@@ -29,6 +29,7 @@ public class CheckoutCommandStep extends liquibase.command.AbstractCommandStep {
     @Override
     public void adjustCommandDefinition(CommandDefinition commandDefinition) {
         commandDefinition.setShortDescription("Checkout a specific commit");
+        commandDefinition.setGroupLongDescription(new String[]{"titan"}, "Titan Data Version Control");
     }
 
     @Override

@@ -29,6 +29,7 @@ public class RemoteAddCommandStep extends liquibase.command.AbstractCommandStep 
     @Override
     public void adjustCommandDefinition(CommandDefinition commandDefinition) {
         commandDefinition.setShortDescription("Set remote destination for a repository");
+        commandDefinition.setGroupLongDescription(new String[]{"titan", "remote"}, "Add, log, ls and rm remotes");
     }
 
     @Override

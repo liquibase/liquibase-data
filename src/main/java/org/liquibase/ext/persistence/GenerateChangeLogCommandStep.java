@@ -7,7 +7,7 @@ import liquibase.command.CommandResultsBuilder;
 
 public class GenerateChangeLogCommandStep extends liquibase.command.AbstractCommandStep {
 
-    public static final String[] COMMAND_NAME = new String[]{ "generateChangeLog" };
+    public static final String[] COMMAND_NAME = new String[]{ "generateChangelog" };
     public static final CommandArgumentDefinition<String> TARGETDB;
     public static final CommandArgumentDefinition<String> TARGETSTAGE;
 

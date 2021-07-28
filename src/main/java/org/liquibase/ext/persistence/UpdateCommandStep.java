@@ -7,7 +7,7 @@ import liquibase.command.CommandResultsBuilder;
 
 public class UpdateCommandStep extends liquibase.command.AbstractCommandStep {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "update" };
+    public static final String[] COMMAND_NAME = new String[]{ "update" };
     public static final CommandArgumentDefinition<String> TARGETDB;
 
     static {
