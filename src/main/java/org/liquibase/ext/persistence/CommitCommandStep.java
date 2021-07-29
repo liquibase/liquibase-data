@@ -47,7 +47,7 @@ public class CommitCommandStep extends TitanBase {
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
         // Map to Titan CLI params
-        List<String> args = BuildArgs("titan", "checkout");
+        List<String> args = BuildArgs("titan", "commit");
         args.addAll(message);
         args.addAll(tags);
         args.add(repo);

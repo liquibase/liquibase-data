@@ -59,8 +59,8 @@ public class CloneCommandStep extends TitanBase {
     public void run(CommandResultsBuilder resultsBuilder) throws Exception {
         //Collect Arguments
         Collection<String> commit = CreateTitanArg(resultsBuilder, COMMIT_ARG, "-c");
-        Collection<String> name = CreateTitanArg(resultsBuilder, NAME_ARG, "-c");
-        Collection<String> params = CreateTitanArg(resultsBuilder, PARAMETERS, "-c");
+        Collection<String> name = CreateTitanArg(resultsBuilder, NAME_ARG, "-n");
+        Collection<String> params = CreateTitanArg(resultsBuilder, PARAMETERS, "-p");
         Collection<String> tags = CreateTitanArg(resultsBuilder, TAGS, "-t");
         Boolean disablePort = resultsBuilder.getCommandScope().getArgumentValue(DISABLE_PORT_FLAG);
         String uri = resultsBuilder.getCommandScope().getArgumentValue(URI);
