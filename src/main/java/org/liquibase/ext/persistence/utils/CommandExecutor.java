@@ -1,7 +1,7 @@
 package org.liquibase.ext.persistence.utils;
 
 import liquibase.ui.UIService;
-import org.apache.commons.lang3.SystemUtils;
+import liquibase.util.SystemUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class CommandExecutor {
         builder.command(args);
         Process process = builder.start();
         try {
-            if (SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_LINUX) {
+            if (!SystemUtil.isWindows()) {
                 process.waitFor(this.duration, this.unit);
             }
 
@@ -58,7 +58,7 @@ public class CommandExecutor {
                 }
                 throw new IOException("Command failed: " + this.stringify(args) + ": " + "");
             }
-            if (SystemUtils.IS_OS_WINDOWS) {
+            if (SystemUtil.isWindows()) {
                 process.waitFor(this.duration, this.unit);
             }
         } finally {

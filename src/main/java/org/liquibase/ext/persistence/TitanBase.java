@@ -7,7 +7,6 @@ import org.liquibase.ext.persistence.utils.CommandExecutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class TitanBase extends liquibase.command.AbstractCommandStep {
