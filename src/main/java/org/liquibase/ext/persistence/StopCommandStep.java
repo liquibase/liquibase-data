@@ -31,7 +31,7 @@ public class StopCommandStep extends TitanBase {
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
-        List<String> args = CE.BuildArgs("titan", "stop", repo);
+        List<String> args = BuildArgs("titan", "stop", repo);
         CE.exec(args);
     }
 }

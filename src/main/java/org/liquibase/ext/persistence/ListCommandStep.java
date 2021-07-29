@@ -21,7 +21,7 @@ public class ListCommandStep extends TitanBase {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
-        List<String> args = CE.BuildArgs("titan", "ls");
+        List<String> args = BuildArgs("titan", "ls");
         CE.exec(args);
     }
 }

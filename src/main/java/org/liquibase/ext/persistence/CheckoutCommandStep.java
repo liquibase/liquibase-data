@@ -5,7 +5,10 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class CheckoutCommandStep extends liquibase.command.AbstractCommandStep {
+import java.util.Collection;
+import java.util.List;
+
+public class CheckoutCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "checkout" };
     public static final CommandArgumentDefinition<String> REPO;
@@ -39,6 +42,16 @@ public class CheckoutCommandStep extends liquibase.command.AbstractCommandStep {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
+        Collection<String> commit = CreateTitanArg(commandResultsBuilder, COMMIT, "-c");
+        Collection<String> tags = CreateTitanArg(commandResultsBuilder, TAGS, "-t");
+        String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
+        // Map to Titan CLI params
+        List<String> args = BuildArgs("titan", "checkout");
+        args.addAll(commit);
+        args.addAll(tags);
+        args.add(repo);
+
+        CE.exec(args);
     }
 }

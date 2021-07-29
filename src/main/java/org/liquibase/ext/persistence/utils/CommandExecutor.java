@@ -30,10 +30,6 @@ public class CommandExecutor {
         this.unit = TimeUnit.MINUTES;
     }
 
-    public List<String> BuildArgs(String... args) {
-        return new ArrayList<>(Arrays.asList(args));
-    }
-
     public void exec(List args) throws InterruptedException, IOException {
 
         ProcessBuilder builder = new ProcessBuilder();
