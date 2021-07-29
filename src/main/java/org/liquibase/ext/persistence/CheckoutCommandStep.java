@@ -42,6 +42,7 @@ public class CheckoutCommandStep extends TitanBase {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
+        //Collect Arguments
         Collection<String> commit = CreateTitanArg(commandResultsBuilder, COMMIT, "-c");
         Collection<String> tags = CreateTitanArg(commandResultsBuilder, TAGS, "-t");
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);

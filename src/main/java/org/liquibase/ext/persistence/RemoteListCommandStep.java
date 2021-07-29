@@ -5,7 +5,10 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class RemoteListCommandStep extends liquibase.command.AbstractCommandStep {
+import java.util.Collection;
+import java.util.List;
+
+public class RemoteListCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "remote", "ls" };
     public static final CommandArgumentDefinition<String> REPO;
@@ -36,6 +39,17 @@ public class RemoteListCommandStep extends liquibase.command.AbstractCommandStep
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
+        //Collect Arguments
+        Collection<String> remote = CreateTitanArg(commandResultsBuilder, REMOTE, "-r");
+        Collection<String> tags = CreateTitanArg(commandResultsBuilder, TAGS, "-t");
+        String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
+        // Map to Titan CLI params
+        List<String> args = BuildArgs("titan", "remote", "ls");
+        args.addAll(remote);
+        args.addAll(tags);
+        args.add(repo);
+
+        CE.exec(args);
     }
 }

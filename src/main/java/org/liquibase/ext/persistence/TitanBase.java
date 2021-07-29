@@ -18,15 +18,13 @@ public class TitanBase extends liquibase.command.AbstractCommandStep {
         return new ArrayList<>(Arrays.asList(args));
     }
 
-    protected Collection<String> CreateTitanArg(CommandResultsBuilder builder, CommandArgumentDefinition<String> key, String titanArg) {
+    protected List<String> CreateTitanArg(CommandResultsBuilder builder, CommandArgumentDefinition<String> key, String titanArg) {
         List<String> r = new ArrayList<>();
         String val = builder.getCommandScope().getArgumentValue(key);
-        if (val == null) {
-            return r;
-        } else {
+        if (val != null) {
             if (val.contains(",")) {
                 // Comma delineated
-                for (String s: val.split(",", 0)) {
+                for (String s : val.split(",", 0)) {
                     r.add(titanArg);
                     r.add(s);
                 }
@@ -34,8 +32,8 @@ public class TitanBase extends liquibase.command.AbstractCommandStep {
                 r.add(titanArg);
                 r.add(val);
             }
-            return r;
         }
+        return r;
     }
 
     @Override
@@ -44,7 +42,5 @@ public class TitanBase extends liquibase.command.AbstractCommandStep {
     }
 
     @Override
-    public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
-
-    }
+    public void run(CommandResultsBuilder commandResultsBuilder) throws Exception { }
 }

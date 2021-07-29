@@ -5,7 +5,10 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-public class MigrateCommandStep extends liquibase.command.AbstractCommandStep {
+import java.util.Collection;
+import java.util.List;
+
+public class MigrateCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "migrate" };
     public static final CommandArgumentDefinition<String> REPO;
@@ -35,6 +38,15 @@ public class MigrateCommandStep extends liquibase.command.AbstractCommandStep {
 
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
+        //Collect Arguments
+        Collection<String> source = CreateTitanArg(commandResultsBuilder, SOURCE, "-s");
+        String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
+        // Map to Titan CLI params
+        List<String> args = BuildArgs("titan", "migrate");
+        args.addAll(source);
+        args.add(repo);
+
+        CE.exec(args);
     }
 }

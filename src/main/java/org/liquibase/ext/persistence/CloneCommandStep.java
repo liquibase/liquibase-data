@@ -7,10 +7,10 @@ import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 import org.liquibase.ext.persistence.utils.CommandExecutor;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class CloneCommandStep extends liquibase.command.AbstractCommandStep {
+public class CloneCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "titan", "clone" };
     public static final CommandArgumentDefinition<String> URI;
@@ -57,10 +57,25 @@ public class CloneCommandStep extends liquibase.command.AbstractCommandStep {
 
     @Override
     public void run(CommandResultsBuilder resultsBuilder) throws Exception {
-        //System.out.print("Titan says Hello " + commandResultsBuilder.getCommandScope().getArgumentValue(CONTEXTS_ARG));
-        List args = new ArrayList();
-        args.add("titan");
-        args.add("--version");
+        //Collect Arguments
+        Collection<String> commit = CreateTitanArg(resultsBuilder, COMMIT_ARG, "-c");
+        Collection<String> name = CreateTitanArg(resultsBuilder, NAME_ARG, "-c");
+        Collection<String> params = CreateTitanArg(resultsBuilder, PARAMETERS, "-c");
+        Collection<String> tags = CreateTitanArg(resultsBuilder, TAGS, "-t");
+        Boolean disablePort = resultsBuilder.getCommandScope().getArgumentValue(DISABLE_PORT_FLAG);
+        String uri = resultsBuilder.getCommandScope().getArgumentValue(URI);
+
+        // Map to Titan CLI params
+        List<String> args = BuildArgs("titan", "clone");
+        args.addAll(commit);
+        args.addAll(name);
+        args.addAll(params);
+        args.addAll(tags);
+        if (disablePort != null) {
+            args.add("-P");
+        }
+        args.add(uri);
+
         CE.exec(args);
     }
 
