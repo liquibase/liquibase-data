@@ -1,0 +1,61 @@
+tests:
+  - "$REMOTE > remote > add":
+      command: liquibase titan remote add --remote $REMOTE --uri $URI --repository $REPO
+      env:
+        get:
+          - URI
+          - REPO
+          - REMOTE
+  - "$REMOTE > remote > ls > has $REMOTE":
+      command: liquibase titan remote ls --repository $REPO
+      stdout:
+        contains: $URI
+      env:
+        get:
+          - URI
+          - REPO
+          - REMOTE
+  - "$REMOTE > commit":
+      command: [liquibase, titan, commit, --message, Test $REMOTE Commit, --repository, $REPO]
+      stdout:
+        contains: Commit
+      env:
+        get:
+          - REPO
+          - REMOTE
+        set:
+          - COMMIT_GUID:
+              after:
+                after: "Commit "
+  - "$REMOTE > remote > log > missing commit":
+      command: liquibase titan remote log --repository $REPO
+      stdout:
+        excludes: Commit $COMMIT_GUID
+      env:
+        get:
+          - COMMIT_GUID
+          - REPO
+          - REMOTE
+  - "$REMOTE > push":
+      command: [liquibase, titan, push, --remote, $REMOTE, --commit, $COMMIT_GUID, --repository, $REPO]
+      stdout:
+        contains:
+          - Pushing $COMMIT_GUID to '$REMOTE'
+          - Push completed successfully
+      env:
+        get:
+          - COMMIT_GUID
+          - REPO
+          - REMOTE
+  - "$REMOTE > remote > log > has commit":
+      command: liquibase titan remote log --repository $REPO
+      stdout:
+        contains: Commit $COMMIT_GUID
+      env:
+        get:
+          - COMMIT_GUID
+          - URI
+          - REPO
+          - REMOTE
+after:
+  clearVars: true

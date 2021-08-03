@@ -14,9 +14,14 @@ public class RemoteAddCommandStep extends TitanBase {
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> REMOTE;
     public static final CommandArgumentDefinition<String> PARAMS;
+    public static final CommandArgumentDefinition<String> URI;
 
     static {
         CommandBuilder builder = new CommandBuilder(COMMAND_NAME);
+        URI = builder.argument("uri", String.class)
+                .description("URI of the remote")
+                .required()
+                .build();
         REPO = builder.argument("repository", String.class)
                 .description("name of the target repository")
                 .required()
@@ -44,11 +49,13 @@ public class RemoteAddCommandStep extends TitanBase {
         Collection<String> remote = CreateTitanArg(commandResultsBuilder, REMOTE, "-r");
         Collection<String> params = CreateTitanArg(commandResultsBuilder, PARAMS, "-p");
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
+        String uri = commandResultsBuilder.getCommandScope().getArgumentValue(URI);
 
         // Map to Titan CLI params
         List<String> args = BuildArgs("titan", "remote", "add");
         args.addAll(remote);
         args.addAll(params);
+        args.add(uri);
         args.add(repo);
 
         CE.exec(args);
