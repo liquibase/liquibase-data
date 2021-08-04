@@ -13,3 +13,4 @@ buildNumber.properties
 .idea
 liquibase_modules
 liquibase.json
+sshKey*
