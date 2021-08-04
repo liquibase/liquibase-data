@@ -36,13 +36,13 @@ public class RemoteRemoveCommandStep extends TitanBase {
     @Override
     public void run(CommandResultsBuilder commandResultsBuilder) throws Exception {
         //Collect Arguments
-        Collection<String> remote = CreateTitanArg(commandResultsBuilder, REMOTE, "-r");
+        String remote = commandResultsBuilder.getCommandScope().getArgumentValue(REMOTE);
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
         // Map to Titan CLI params
         List<String> args = BuildArgs("titan", "remote", "rm");
-        args.addAll(remote);
         args.add(repo);
+        args.add(remote);
 
         CE.exec(args);
     }
