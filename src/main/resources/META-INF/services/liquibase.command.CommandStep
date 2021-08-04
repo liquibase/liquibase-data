@@ -2,6 +2,7 @@ org.liquibase.ext.persistence.CheckoutCommandStep
 org.liquibase.ext.persistence.CloneCommandStep
 org.liquibase.ext.persistence.CommitCommandStep
 org.liquibase.ext.persistence.CopyCommandStep
+org.liquibase.ext.persistence.DeleteCommandStep
 org.liquibase.ext.persistence.DiffCommandStep
 org.liquibase.ext.persistence.GenerateChangeLogCommandStep
 org.liquibase.ext.persistence.ListCommandStep
