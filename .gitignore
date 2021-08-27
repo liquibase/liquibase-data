@@ -10,7 +10,11 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 *.iml
+
+# Local Development Files
 .idea
-liquibase_modules
+liquibase_libs
 liquibase.json
 sshKey*
+changelog.xml
+liquibase.properties
