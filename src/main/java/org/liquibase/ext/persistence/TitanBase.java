@@ -6,10 +6,7 @@ import io.titandata.client.RepositoriesApi;
 import liquibase.Scope;
 import liquibase.command.CommandArgumentDefinition;
 import liquibase.command.CommandResultsBuilder;
-import org.liquibase.ext.persistence.titan.TitanImage;
-import org.liquibase.ext.persistence.titan.TitanPort;
-import org.liquibase.ext.persistence.titan.TitanRepo;
-import org.liquibase.ext.persistence.titan.TitanVolume;
+import org.liquibase.ext.persistence.titan.*;
 import org.liquibase.ext.persistence.utils.CommandExecutor;
 import org.openapitools.client.model.Repository;
 import org.openapitools.client.model.RepositoryStatus;
@@ -24,10 +21,10 @@ public class TitanBase extends liquibase.command.AbstractCommandStep {
     protected final CommandExecutor CE = new CommandExecutor(Scope.getCurrentScope().getUI());
     protected static final ApiClient TitanClient = new ApiClient();
     private static final TitanRepo TitanRepo;
+    private static final TitanLoader loader = TitanLoader.load();
 
     static {
-        //TODO get this from titan config
-        TitanClient.setBasePath("http://localhost:55223");
+        TitanClient.setBasePath("http://" + loader.Host + ":" + loader.Port);
         TitanRepo = new TitanRepo(TitanClient);
     }
 
