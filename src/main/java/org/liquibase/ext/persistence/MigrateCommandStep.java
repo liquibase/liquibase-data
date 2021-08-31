@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MigrateCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "migrate" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "migrate" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> SOURCE;
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PushCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "push" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "push" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> COMMIT;
     public static final CommandArgumentDefinition<String> REMOTE;

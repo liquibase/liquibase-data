@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CheckoutCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "checkout" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "checkout" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> COMMIT;
     public static final CommandArgumentDefinition<String> TAGS;

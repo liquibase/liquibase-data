@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RunCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "run" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "run" };
     public static final CommandArgumentDefinition<String> IMAGE;
     public static final CommandArgumentDefinition<String> NAME_ARG;
     public static final CommandArgumentDefinition<String> ENVS;

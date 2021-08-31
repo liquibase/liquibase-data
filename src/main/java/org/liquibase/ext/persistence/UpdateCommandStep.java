@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UpdateCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "update" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "update" };
     public static final CommandArgumentDefinition<String> TARGET_DB;
     public static final CommandArgumentDefinition<String> CHANGELOG_FILE_ARG;
     public static final CommandArgumentDefinition<String> URL_ARG;
@@ -26,7 +26,7 @@ public class UpdateCommandStep extends TitanBase {
 
     static {
         CommandBuilder builder = new CommandBuilder(COMMAND_NAME);
-        TARGET_DB = builder.argument("targetDB", String.class)
+        TARGET_DB = builder.argument("targetDb", String.class)
                 .description("Name of Target Database")
                 .build();
         URL_ARG = builder.argument("url", String.class).required()

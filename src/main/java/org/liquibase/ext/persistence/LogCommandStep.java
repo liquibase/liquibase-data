@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LogCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "log" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "log" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> TAGS;
 

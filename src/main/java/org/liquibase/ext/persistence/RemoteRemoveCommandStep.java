@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RemoteRemoveCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "remote", "rm" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "remote", "rm" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> REMOTE;
 

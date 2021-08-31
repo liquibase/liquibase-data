@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ListCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "ls" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "ls" };
 
     @Override
     public void adjustCommandDefinition(CommandDefinition commandDefinition) {

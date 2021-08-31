@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 public class DiffCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "diff" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "diff" };
     public static final CommandArgumentDefinition<String> SOURCE_DB;
     public static final CommandArgumentDefinition<String> TARGET_DB;
     public static final CommandArgumentDefinition<String> SOURCE_STAGE;
@@ -42,11 +42,11 @@ public class DiffCommandStep extends TitanBase {
 
     static {
         CommandBuilder builder = new CommandBuilder(COMMAND_NAME);
-        SOURCE_DB = builder.argument("sourceDB", String.class)
+        SOURCE_DB = builder.argument("sourceDb", String.class)
                 .description("Name of Source Database")
                 //.required()
                 .build();
-        TARGET_DB = builder.argument("targetDB", String.class)
+        TARGET_DB = builder.argument("targetDb", String.class)
                 .description("Name of Target Database")
                 //.required()
                 .build();

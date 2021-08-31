@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StopCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "stop" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "stop" };
     public static final CommandArgumentDefinition<String> REPO;
 
     static {

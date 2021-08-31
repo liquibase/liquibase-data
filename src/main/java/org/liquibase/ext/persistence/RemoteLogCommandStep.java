@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RemoteLogCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "remote", "log" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "remote", "log" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> TAGS;
 

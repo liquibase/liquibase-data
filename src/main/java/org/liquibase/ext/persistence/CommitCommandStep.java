@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CommitCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "commit" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "commit" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> MESSAGE;
     public static final CommandArgumentDefinition<String> TAGS;

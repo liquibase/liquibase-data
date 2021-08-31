@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GenerateChangeLogCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "generateChangelog" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "generateChangelog" };
     public static final CommandArgumentDefinition<String> TARGET_DB;
     public static final CommandArgumentDefinition<String> TARGET_STATE;
 
@@ -29,7 +29,7 @@ public class GenerateChangeLogCommandStep extends TitanBase {
 
     static {
         CommandBuilder builder = new CommandBuilder(COMMAND_NAME);
-        TARGET_DB = builder.argument("targetDB", String.class)
+        TARGET_DB = builder.argument("targetDb", String.class)
                 .description("Name of Target Database")
                 .required()
                 .build();

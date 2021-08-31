@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TagCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "tag" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "tag" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> COMMIT_ARG;
     public static final CommandArgumentDefinition<String> TAGS;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DeleteCommandStep extends TitanBase{
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "delete" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "delete" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> COMMIT;
     public static final CommandArgumentDefinition<String> TAGS;

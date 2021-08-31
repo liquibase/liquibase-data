@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CopyCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "cp" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "cp" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<String> DESTINATION;
     public static final CommandArgumentDefinition<String> SOURCE;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RemoveCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "rm" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "rm" };
     public static final CommandArgumentDefinition<String> REPO;
     public static final CommandArgumentDefinition<Boolean> FORCE;
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CloneCommandStep extends TitanBase {
 
-    public static final String[] COMMAND_NAME = new String[]{ "titan", "clone" };
+    public static final String[] COMMAND_NAME = new String[]{ "data", "clone" };
     public static final CommandArgumentDefinition<String> URI;
     public static final CommandArgumentDefinition<String> COMMIT_ARG;
     public static final CommandArgumentDefinition<Boolean> DISABLE_PORT_FLAG;
