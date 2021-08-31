@@ -6,7 +6,7 @@ tests:
           - URI
           - REMOTE
   - "remove $REPO":
-      command: liquibase titan rm --force --repository $REPO
+      command: liquibase data rm --force --repository $REPO
       env:
         get:
           - REPO

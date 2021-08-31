@@ -1,6 +1,6 @@
 tests:
   - "can clone hello-world/postgres":
-      command: liquibase titan clone --name hello-world --uri s3web://demo.titan-data.io/hello-world/postgres
+      command: liquibase data clone --name hello-world --uri s3web://demo.titan-data.io/hello-world/postgres
       stdout:
         contains:
           - Running controlled container hello-world

@@ -1,6 +1,6 @@
 tests:
   - "$DB > $VERSION > run":
-      command: liquibase titan run --name $DB-test --image $DB:$VERSION
+      command: liquibase data run --name $DB-test --image $DB:$VERSION
       stdout:
         contains:
           - Creating repository $DB-test
@@ -10,7 +10,7 @@ tests:
           - DB
           - VERSION
   - "$DB > $VERSION > commit":
-      command: [liquibase, titan, commit, --message, Test Commit, --repository, $DB-test]
+      command: [liquibase, data, commit, --message, Test Commit, --repository, $DB-test]
       stdout:
         contains: Commit
       env:
@@ -22,7 +22,7 @@ tests:
               after:
                 after: "Commit "
   - "$DB > $VERSION > checkout":
-      command: [liquibase, titan, checkout, --commit, $COMMIT_GUID, --repository, $DB-test]
+      command: [liquibase, data, checkout, --commit, $COMMIT_GUID, --repository, $DB-test]
       wait: 5
       stdout:
         contains:
@@ -36,14 +36,14 @@ tests:
           - DB
           - VERSION
   - "$DB > $VERSION > remote > add > s3":
-      command: liquibase titan remote add --remote s3 --uri $URI --repository $DB-test
+      command: liquibase data remote add --remote s3 --uri $URI --repository $DB-test
       env:
         get:
           - DB
           - VERSION
           - URI
   - "$DB > $VERSION > remote > ls":
-      command: liquibase titan remote ls --repository $DB-test
+      command: liquibase data remote ls --repository $DB-test
       stdout:
         contains: $URI
       env:
@@ -52,7 +52,7 @@ tests:
           - VERSION
           - URI
   - "$DB > $VERSION > remote > log > missing commit":
-      command: liquibase titan remote log --repository $DB-test
+      command: liquibase data remote log --repository $DB-test
       stdout:
         excludes: Commit $COMMIT_GUID
       env:
@@ -61,7 +61,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > push":
-      command: [liquibase, titan, push, --remote, s3, --commit, $COMMIT_GUID, --repository, $DB-test]
+      command: [liquibase, data, push, --remote, s3, --commit, $COMMIT_GUID, --repository, $DB-test]
       stdout:
         contains:
           - Pushing $COMMIT_GUID to 's3'
@@ -72,7 +72,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > remote > log > has commit":
-      command: liquibase titan remote log --repository $DB-test
+      command: liquibase data remote log --repository $DB-test
       stdout:
         contains: Commit $COMMIT_GUID
       env:
@@ -81,7 +81,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > delete > commit":
-      command: liquibase titan delete --commit $COMMIT_GUID --repository $DB-test
+      command: liquibase data delete --commit $COMMIT_GUID --repository $DB-test
       stdout:
         contains: $COMMIT_GUID deleted
       env:
@@ -90,7 +90,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > log > missing commit":
-      command: liquibase titan log --repository $DB-test
+      command: liquibase data log --repository $DB-test
       stdout:
         excludes:
           - $COMMIT_GUID
@@ -100,7 +100,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > pull":
-      command: [liquibase, titan, pull, --commit, $COMMIT_GUID, --remote, s3, --repository, $DB-test]
+      command: [liquibase, data, pull, --commit, $COMMIT_GUID, --remote, s3, --repository, $DB-test]
       stdout:
         contains:
           - Pulling $COMMIT_GUID from 's3'
@@ -111,7 +111,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > log > has commit":
-      command: liquibase titan log --repository $DB-test
+      command: liquibase data log --repository $DB-test
       stdout:
         contains: commit $COMMIT_GUID
       env:
@@ -120,7 +120,7 @@ tests:
           - VERSION
           - COMMIT_GUID
   - "$DB > $VERSION > rm":
-      command: liquibase titan rm --force --repository $DB-test
+      command: liquibase data rm --force --repository $DB-test
       wait: 5
       stdout:
         contains:
@@ -131,7 +131,7 @@ tests:
           - DB
           - VERSION
   - "$DB > $VERSION > clone":
-      command: liquibase titan clone --name $DB-test --uri $URI
+      command: liquibase data clone --name $DB-test --uri $URI
       wait: 5
       stdout:
         contains:
@@ -145,7 +145,7 @@ tests:
           - VERSION
           - URI
   - "$DB > $VERSION > duplicate clone fails":
-      command: liquibase titan clone --name $DB-test2 --uri $URI
+      command: liquibase data clone --name $DB-test2 --uri $URI
       exitValue: 1
       stdout:
         contains:
@@ -166,7 +166,7 @@ tests:
           - VERSION
           - URI
   - "$DB > $VERSION > log > has commit":
-      command: liquibase titan log --repository $DB-test
+      command: liquibase data log --repository $DB-test
       stdout:
         contains: commit $COMMIT_GUID
       env:
@@ -182,7 +182,7 @@ tests:
           - VERSION
           - URI
   - "$DB > $VERSION > rm":
-      command: liquibase titan rm --force --repository $DB-test
+      command: liquibase data rm --force --repository $DB-test
       wait: 5
       stdout:
         contains:

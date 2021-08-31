@@ -1,8 +1,8 @@
 tests:
   - "can launch postgres":
-      command: liquibase titan run --image postgres
+      command: liquibase data run --image postgres
   - "can create commit with tag=one":
-      command: liquibase titan commit --tags tag=one --repository postgres
+      command: liquibase data commit --tags tag=one --repository postgres
       stdout:
         contains: Commit
       env:
@@ -12,7 +12,7 @@ tests:
                 delimiter: " "
                 position: 1
   - "can create commit with tag=two":
-      command: liquibase titan commit --tags tag=two --repository postgres
+      command: liquibase data commit --tags tag=two --repository postgres
       stdout:
         contains: Commit
       env:
@@ -22,11 +22,11 @@ tests:
                 delimiter: " "
                 position: 1
   - "can add s3 remote":
-      command: liquibase titan remote add --uri s3://titan-data-testdata/e2etest --repository postgres
+      command: liquibase data remote add --uri s3://titan-data-testdata/e2etest --repository postgres
   - "can push tag=two":
-      command: liquibase titan push --tags tag=two --repository postgres
+      command: liquibase data push --tags tag=two --repository postgres
   - "commit two exists in remote":
-      command: liquibase titan remote log --repository postgres
+      command: liquibase data remote log --repository postgres
       stdout:
         contains: $COMMIT_TWO
         excludes: $COMMIT_ONE
@@ -35,29 +35,29 @@ tests:
           - COMMIT_ONE
           - COMMIT_TWO
   - "can push tag=one":
-      command: liquibase titan push --tags tag=one --repository postgres
+      command: liquibase data push --tags tag=one --repository postgres
   - "commit one exists in remote":
-      command: liquibase titan remote log --repository postgres
+      command: liquibase data remote log --repository postgres
       stdout:
         contains: $COMMIT_ONE
       env:
         get:
           - COMMIT_ONE
   - "can remove postgres":
-      command: liquibase titan rm --force --repository postgres
+      command: liquibase data rm --force --repository postgres
   - "can clone tag=one":
-      command: liquibase titan clone --name postgres --uri s3://titan-data-testdata/e2etest?tag=tag=one
+      command: liquibase data clone --name postgres --uri s3://titan-data-testdata/e2etest?tag=tag=one
   - "commit one exists locally":
-      command: liquibase titan log --repository postgres
+      command: liquibase data log --repository postgres
       stdout:
         contains: $COMMIT_ONE
       env:
         get:
           - COMMIT_ONE
   - "can remove cloned postgres":
-      command: liquibase titan rm --force --repository postgres
+      command: liquibase data rm --force --repository postgres
   - "clone of non-existent tag fails":
-      command: liquibase titan clone --name postgres2 --uri s3://titan-data-testdata/e2etest?tag=tag=three
+      command: liquibase data clone --name postgres2 --uri s3://titan-data-testdata/e2etest?tag=tag=three
       exitValue: 1
   - "can cleanup S3 assets":
       command: aws s3 rm s3://titan-data-testdata/e2etest --recursive
