@@ -40,7 +40,6 @@ public class TitanLoader {
         Iterator<Map.Entry<String, Object>> iterator = contexts.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = iterator.next();
-            System.out.println(entry.getKey() + " ==> " + entry.getValue());
             TitanContext context = oMapper.convertValue(entry.getValue(), TitanContext.class);
             if (entry.getValue().toString().contains("default=true")) {
                 return new TitanLoader(entry.getKey(), context.host, context.port, context.type);
