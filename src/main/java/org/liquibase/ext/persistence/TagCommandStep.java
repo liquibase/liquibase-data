@@ -45,7 +45,7 @@ public class TagCommandStep extends TitanBase {
         String repo = commandResultsBuilder.getCommandScope().getArgumentValue(REPO);
 
         // Map to Titan CLI params
-        List<String> args = BuildArgs("titan", "rm");
+        List<String> args = BuildArgs("titan", "tag");
         args.addAll(commit);
         args.addAll(tags);
         args.add(repo);
