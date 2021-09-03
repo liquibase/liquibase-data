@@ -10,7 +10,7 @@ Over the next hour, you will configure your computer to begin versioning a datab
 
 **IMPORTANT NOTES**
 
-- We currently do not support Docker on Apple M1 Chip. 
+- We currently do not support Docker on the Apple M1 Chip. 
 - Be aware that if you uninstall your current version of Docker to reinstall, the uninstall process will remove your images and volumes on your machine.
 
 ## Step 1: Install Docker Desktop Community
