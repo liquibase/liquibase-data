@@ -37,8 +37,9 @@ First, identify the current commit ID's using the following command:
 
 Select the commit id that you want to compare against the current state and execute the following command:
 
-    liquibase data diff --source-db=<your-repos-name> --target-state=<target-commit-id>
-    
+    liquibase data diff --source-db=<your-repos-name> --target-state=<target-commit-id> --reference-url=<JDBC URL for source database>
+The Reference URL can be found in your `liquibase.properties` file.
+
 Now select a different commit ID and run the following command: 
 
     liquibase data diff --source-db=<your-repos-name> --source-state=<source-commit-id> --target-state=<target-commit-id> 
