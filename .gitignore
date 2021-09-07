@@ -18,3 +18,4 @@ liquibase.json
 sshKey*
 changelog.xml
 liquibase.properties
+notes

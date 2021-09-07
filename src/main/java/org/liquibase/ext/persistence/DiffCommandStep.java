@@ -107,34 +107,24 @@ public class DiffCommandStep extends TitanBase {
         Repository repo = GetRepoInfo(sourceDB);
         String pwd = System.getProperty("user.dir");
         String targetName = "";
-
-        // Target and Source
-        // Checkout sourceState
-        // copy contents
-        // start new container with targetState
-        // checkout targetState
-        // Diff
-
-        // Target only
-        // create commit with auto commit message
-        // copy contents
-        // start new container with current state
-        // checkout targetState
-        // diff
-        // checkout auto commit
-        // delete auto commit
+        String sp = System.getProperty("file.separator");
 
         if (sourceDB != null && targetState != null) {
             if (sourceState != null) {
                 CE.exec(BuildArgs("titan", "checkout", "-c", sourceState, sourceDB));
             }
             if (sourceState == null) {
-                CE.exec(BuildArgs("titan", "commit", "-m", "", sourceDB));
+                CE.exec(BuildArgs("titan", "commit", "-m", "automated diff commit", sourceDB));
             }
 
             // create temp dir .tempdata
-            Path path = Paths.get(pwd + "/.tempdata");
-            Files.createDirectory(path);
+            Path path = Paths.get(pwd + sp + ".tempdata");
+            try {
+                Files.createDirectory(path);
+            } catch (Exception e){
+                this.cleanUp(pwd + sp + ".tempdata");
+                Files.createDirectory(path);
+            }
 
             CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
             CE.exec(BuildArgs("titan", "stop", sourceDB));
@@ -145,7 +135,7 @@ public class DiffCommandStep extends TitanBase {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
                 vol.ActivateVolume(repo.getName(), vol.getName());
-                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint"), ".tempdata" ));
+                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint") + sp + ".", pwd + sp + ".tempdata" + sp + vol.getName() ));
                 vol.DeactivateVolume(repo.getName(), vol.getName());
             }
 
@@ -171,7 +161,7 @@ public class DiffCommandStep extends TitanBase {
             }
             for (TitanVolume volume: GetVolumes(repo)) {
                 runArgs.add("-v");
-                runArgs.add(pwd + "/.tempdata" + "/" + volume.getName() + ":" + volume.getPath());
+                runArgs.add(pwd + sp + ".tempdata" + sp + volume.getName() + ":" + volume.getPath());
             }
             runArgs.add(GetImage(repo).getDigest());
             CE.exec(runArgs);
@@ -213,6 +203,7 @@ public class DiffCommandStep extends TitanBase {
             commandScope.setOutput(resultsBuilder.getOutputStream());
             CommandResults result = commandScope.execute();
         } catch (Exception e) {
+            this.cleanUp(pwd + sp + ".tempdata");
             UIService ui = Scope.getCurrentScope().getUI();
             ui.sendErrorMessage(e.getMessage());
             throw new Exception(e);
@@ -221,15 +212,19 @@ public class DiffCommandStep extends TitanBase {
         // Clean Up
         if (sourceDB != null && targetState != null) {
             CE.exec(BuildArgs("docker", "rm", targetName, "-f"));
-            Path path = Paths.get(pwd + "/.tempdata");
-            try (Stream<Path> walk = Files.walk(path)) {
-                walk.sorted(Comparator.reverseOrder()).forEach(this::deleteFiles);
-            }
+            this.cleanUp(pwd + sp + ".tempdata");
             if (sourceState == null) {
                 String commit = GetLatestCommit(sourceDB);
                 CE.exec(BuildArgs("titan", "checkout", "-c", commit, sourceDB));
                 CE.exec(BuildArgs("titan", "delete", "-c", commit, sourceDB));
             }
+        }
+    }
+
+    private void cleanUp(String path) throws IOException {
+        Path p = Paths.get(path);
+        try (Stream<Path> walk = Files.walk(p)) {
+            walk.sorted(Comparator.reverseOrder()).forEach(this::deleteFiles);
         }
     }
 
