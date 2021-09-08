@@ -5,7 +5,6 @@ import liquibase.command.CommandBuilder;
 import liquibase.command.CommandDefinition;
 import liquibase.command.CommandResultsBuilder;
 
-import java.util.Collection;
 import java.util.List;
 
 public class RemoteRemoveCommandStep extends TitanBase {
@@ -22,6 +21,7 @@ public class RemoteRemoveCommandStep extends TitanBase {
                 .build();
         REMOTE = builder.argument("remote", String.class)
                 .description("name of the remote provider, defaults to origin")
+                .required()
                 .build();
     }
 
