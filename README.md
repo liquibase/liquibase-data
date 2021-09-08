@@ -4,6 +4,8 @@ Liquibase Data is an extension for Liquibase that brings git-like functionality 
 
 With Liquibase Data, you can version containerized databases, share changes with team members, store versions in remote locations, tag versions.
 
+For a tutorial on how to use Liquibase Data, please join our [Open Beta Program](beta/README.md).
+
 ## Getting Started
 ### Requirements
 *  [Liquibase 4.4.3](https://github.com/liquibase/liquibase/releases)
