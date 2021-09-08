@@ -13,9 +13,12 @@ import org.openapitools.client.model.Volume;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.nio.file.*;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class DiffCommandStep extends TitanBase {
@@ -121,9 +124,13 @@ public class DiffCommandStep extends TitanBase {
             Path path = Paths.get(pwd + sp + ".tempdata");
             try {
                 Files.createDirectory(path);
+                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr-x---");
+                Files.setPosixFilePermissions(path, permissions);
             } catch (Exception e){
                 this.cleanUp(pwd + sp + ".tempdata");
                 Files.createDirectory(path);
+                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr-x---");
+                Files.setPosixFilePermissions(path, permissions);
             }
 
             CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
@@ -203,6 +210,12 @@ public class DiffCommandStep extends TitanBase {
             commandScope.setOutput(resultsBuilder.getOutputStream());
             CommandResults result = commandScope.execute();
         } catch (Exception e) {
+
+            //TODO this can hang
+            if (sourceDB != null && targetState != null) {
+                CE.exec(BuildArgs("docker", "rm", targetName, "-f"));
+            }
+
             this.cleanUp(pwd + sp + ".tempdata");
             UIService ui = Scope.getCurrentScope().getUI();
             ui.sendErrorMessage(e.getMessage());
