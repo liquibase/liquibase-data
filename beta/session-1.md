@@ -58,7 +58,7 @@ Read through [this quick start tutorial.](https://titan-data.io/getting-started)
 
 ## Step 5: Download Liquibase Data extension and add to your system path.
 
-1. Download [Liquibase Data extension.](https://github.com/liquibase/liquibase-data/releases/tag/v0.0.1) 
+1. Download the latest [Liquibase Data extension.](https://github.com/liquibase/liquibase-data/releases) 
 2. Unzip the downloaded release.
 3. Copy the contents to `LIQUIBASE/lib`. This is the `lib` directory in your Liquibase installation location.
 

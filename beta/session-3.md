@@ -13,11 +13,11 @@ Tags help you assign human-friendly names to specific commits. They can also be 
 
 To create a tag, identify your last commit id with the following:
 
-    liquibase data log --repository=<your-repos-name>
+    liquibase data log --repository=myrepos
 
 Once you have the commit id, apply a tag with the following command:
 
-    liquibase data datatag --repository=<your repos name> --commit=<commit id> --tags=<tag name>
+    liquibase data datatag --repository=myrepos --commit=<commit id> --tags=<tag name>
 
 Now that you have applied the new tag, you can checkout a specific commit using a tag.
 
@@ -33,16 +33,17 @@ The Liquibase Data `diff` command requires two arguments: the `source-db` and th
 
 First, identify the current commit ID's using the following command:
 
-    liquibase data log --repository=<your-repos-name>
+    liquibase data log --repository=myrepos
 
 Select the commit id that you want to compare against the current state and execute the following command:
 
-    liquibase data diff --source-db=<your-repos-name> --target-state=<target-commit-id> --reference-url=<JDBC URL for source database>
+    liquibase data diff --source-db=myrepos --target-state=<target-commit-id> --reference-url=<JDBC URL for source database>
+
 The Reference URL can be found in your `liquibase.properties` file.
 
 Now select a different commit ID and run the following command: 
 
-    liquibase data diff --source-db=<your-repos-name> --source-state=<source-commit-id> --target-state=<target-commit-id> 
+    liquibase data diff --source-db=myrepos --source-state=<source-commit-id> --target-state=<target-commit-id> 
 
 NOTE: Liquibase Data uses the term "source" to represent the database that holds the changes you with to apply to the "target". The terms "reference" and "source" are interchangeable.
     

@@ -39,8 +39,10 @@ We require a subfolder in your bucket. Feel free to use any name you would like.
 
 In this step, you will push your latest commit to your S3 remote location.
 
-    liquibase data remote add --remote=s3://<your-s3-bucket-name>/data --repository=myrepos
+    liquibase data remote add --uri=s3://<your-s3-bucket-name>/data/ --repository=myrepos
     liquibase data push --repository=myrepos
+
+NOTE: Make sure to use a trailing slash on your `--uri` argument.
 
 ## Step 6: Verify your commit exists in the remote repository
 
@@ -58,7 +60,7 @@ The previous push will only push the latest commit to the remote, you will now p
 
 For each commit you want to push, perform the following:
 
-    liquibase data push --repository=myrepos -c <commit id>
+    liquibase data push --repository=myrepos --commit=<commit id>
 
 Verify the commits are persisted to the remote using the following command:
 
