@@ -22,7 +22,6 @@ public class DiffCommandStep extends TitanBase {
 
     public static final String[] COMMAND_NAME = new String[]{ "data", "diff" };
     public static final CommandArgumentDefinition<String> SOURCE_DB;
-    //public static final CommandArgumentDefinition<String> TARGET_DB;
     public static final CommandArgumentDefinition<String> SOURCE_STAGE;
     public static final CommandArgumentDefinition<String> TARGET_STAGE;
 
@@ -95,7 +94,6 @@ public class DiffCommandStep extends TitanBase {
 
     @Override
     public void run(CommandResultsBuilder resultsBuilder) throws Exception {
-        //String targetDB = resultsBuilder.getCommandScope().getArgumentValue(TARGET_DB);
         String targetState = resultsBuilder.getCommandScope().getArgumentValue(TARGET_STAGE);
         String sourceDB = resultsBuilder.getCommandScope().getArgumentValue(SOURCE_DB);
         String sourceState = resultsBuilder.getCommandScope().getArgumentValue(SOURCE_STAGE);
@@ -106,9 +104,6 @@ public class DiffCommandStep extends TitanBase {
         String sp = System.getProperty("file.separator");
 
         if (sourceDB != null && targetState != null) {
-            if (sourceState != null) {
-                CE.exec(BuildArgs("titan", "checkout", "-c", sourceState, sourceDB));
-            }
             if (sourceState == null) {
                 CE.exec(BuildArgs("titan", "commit", "-m", "automated diff commit", sourceDB));
             }
@@ -183,7 +178,13 @@ public class DiffCommandStep extends TitanBase {
             );
 
             CE.exec(BuildArgs("titan", "start", sourceDB));
-            CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
+
+            if (sourceState != null) {
+                CE.exec(BuildArgs("titan", "checkout", "-c", sourceState, sourceDB));
+            } else {
+                String lastCommit = GetLatestCommit(repo.getName());
+                CE.exec(BuildArgs("titan", "checkout", "-c", lastCommit, sourceDB));
+            }
         }
 
         Thread.sleep(3000);
@@ -223,9 +224,8 @@ public class DiffCommandStep extends TitanBase {
             CE.exec(BuildArgs("docker", "rm", targetName, "-f"));
             this.cleanUp(pwd + sp + ".tempdata");
             if (sourceState == null) {
-                String commit = GetLatestCommit(sourceDB);
-                CE.exec(BuildArgs("titan", "checkout", "-c", commit, sourceDB));
-                CE.exec(BuildArgs("titan", "delete", "-c", commit, sourceDB));
+                String lastCommit = GetLatestCommit(sourceDB);
+                CE.exec(BuildArgs("titan", "delete", "-c", lastCommit, sourceDB));
             }
         }
     }
