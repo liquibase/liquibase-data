@@ -124,13 +124,9 @@ public class DiffCommandStep extends TitanBase {
             Path path = Paths.get(pwd + sp + ".tempdata");
             try {
                 Files.createDirectory(path);
-                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr-x---");
-                Files.setPosixFilePermissions(path, permissions);
             } catch (Exception e){
                 this.cleanUp(pwd + sp + ".tempdata");
                 Files.createDirectory(path);
-                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr-x---");
-                Files.setPosixFilePermissions(path, permissions);
             }
 
             CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
@@ -166,12 +162,25 @@ public class DiffCommandStep extends TitanBase {
                 portString = String.valueOf(p);
                 s.close();
             }
-            for (TitanVolume volume: GetVolumes(repo)) {
-                runArgs.add("-v");
-                runArgs.add(pwd + sp + ".tempdata" + sp + volume.getName() + ":" + volume.getPath());
-            }
+
             runArgs.add(GetImage(repo).getDigest());
             CE.exec(runArgs);
+
+            //Wait for new container to fully initialize
+            Thread.sleep(3000);
+
+            CE.exec(BuildArgs("docker", "stop", targetName));
+            for (TitanVolume vol: GetVolumes(repo)) {
+                Volume volume = vol.GetVolume(repo.getName(), vol.getName());
+                Map<String, String> config = vol.GetVolumeConfig(volume);
+
+                //TODO get container ID?
+
+                CE.exec(BuildArgs("docker", "cp", "-a", pwd + sp + ".tempdata" + sp + vol.getName() + sp + ".", targetName + ":" + vol.getPath() ));
+//                runArgs.add("-v");
+//                runArgs.add(pwd + sp + ".tempdata" + sp + volume.getName() + ":" + volume.getPath());
+            }
+            CE.exec(BuildArgs("docker", "start", targetName));
 
             // get URL
             String url = resultsBuilder.getCommandScope().getArgumentValue(URL_ARG);
