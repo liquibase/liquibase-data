@@ -31,6 +31,10 @@ With Liquibase, you can create a difference report using the `diff` command. Nor
 
 The Liquibase Data `diff` command requires two arguments: the `source-db` and the `target-state`. This assumes you will use the current state as your `source-target`. You can use the `source-target` argument to use a different source state than the current one.
 
+NOTE: Windows users need to update Docker settings to take advantage of Liquibase Data diff functionality. Simple update Settings -> Resources -> File Sharing and include the directory you will execute `liquibase data` from. 
+
+![Image of Windows Docker Resources File Sharing Settings](images/docker_resources_filesharing.png)
+
 First, identify the current commit ID's using the following command:
 
     liquibase data log --repository=myrepos
