@@ -13,12 +13,9 @@ import org.openapitools.client.model.Volume;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.nio.file.*;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Stream;
 
 public class DiffCommandStep extends TitanBase {
@@ -48,10 +45,6 @@ public class DiffCommandStep extends TitanBase {
         SOURCE_DB = builder.argument("sourceDb", String.class)
                 .description("Name of Source Database")
                 .build();
-//        TARGET_DB = builder.argument("targetDb", String.class)
-//                .description("Name of Target Database")
-//                //.required()
-//                .build();
         SOURCE_STAGE = builder.argument("sourceState", String.class)
                 .description("Commit for Source Database, defaults to current (optional)")
                 .build();
@@ -133,7 +126,6 @@ public class DiffCommandStep extends TitanBase {
             CE.exec(BuildArgs("titan", "stop", sourceDB));
 
             // activate volume per mount
-            //Repository repo = GetRepoInfo(targetDB);
             for (TitanVolume vol : GetVolumes(repo)) {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
@@ -173,12 +165,7 @@ public class DiffCommandStep extends TitanBase {
             for (TitanVolume vol: GetVolumes(repo)) {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
-
-                //TODO get container ID?
-
                 CE.exec(BuildArgs("docker", "cp", "-a", pwd + sp + ".tempdata" + sp + vol.getName() + sp + ".", targetName + ":" + vol.getPath() ));
-//                runArgs.add("-v");
-//                runArgs.add(pwd + sp + ".tempdata" + sp + volume.getName() + ":" + volume.getPath());
             }
             CE.exec(BuildArgs("docker", "start", targetName));
 
