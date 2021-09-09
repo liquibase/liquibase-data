@@ -143,4 +143,4 @@ You can also find us on [Discord](https://discord.gg/NVpqM7nNnT) in #beta-releas
 
 ## Step 4: Continue onto Session 3
 
-Session 2 can be found [here.](session-3.md)
+Session 3 can be found [here.](session-3.md)
