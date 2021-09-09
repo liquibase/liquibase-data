@@ -165,7 +165,7 @@ You can rollback to previous commits easily. You will need the first commit id. 
 
 Execute this command: 
 
-    liquibase data checkout --commit=<commit id>--repository=myrepos
+    liquibase data checkout --commit=<commit id> --repository=myrepos
 
 ## Step 11: Connect to the database using a tool like DBeaver to verify that no tables exist.
 
