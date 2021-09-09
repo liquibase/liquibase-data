@@ -17,11 +17,11 @@ To create a tag, identify your last commit id with the following:
 
 Once you have the commit id, apply a tag with the following command:
 
-    liquibase data datatag --repository=myrepos --commit=<commit id> --tags=<tag name>
+    liquibase data tag --repository=myrepos --commit=<commit id> --tags=<tag name>
 
 Now that you have applied the new tag, you can checkout a specific commit using a tag.
 
-    liquibase data checkout --repository=<repos name> --tags=<tag name>
+    liquibase data checkout --repository=myrepos --tags=<tag name>
 
 Note: If 2 commits have the same tag, titan will check out the most recent commit.
 
