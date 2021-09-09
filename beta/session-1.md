@@ -81,6 +81,9 @@ Using a text editor, create a `liquibase.properties` file with the contents belo
     username: postgres
     password: secret
     changeLogFile: changelog.xml
+    repository: myrepos
+
+NOTE: The repository name can be anything you would like. For the following steps, we will use myrepos. By specifying in your liquibase.properties, you will not have to use the required argument `--respository=myrepos`. 
 
 ## Step 3: Create a new data repository from a blank Docker database
 
@@ -91,6 +94,8 @@ Think of this step as your `git init` for the versioned database. The following 
 Execute this command: 
 
     liquibase data run --name=myrepos --env=POSTGRES_PASSWORD=secret --image=postgres
+
+NOTE: The `--name` argument should match the repository name you listed in `liquibase.properties`.
 
 
 Verify the repository exists by executing this command:
@@ -103,11 +108,11 @@ On your first commit, you will be committing an empty database and creating a ba
 
 Execute this command: 
 
-    liquibase data commit --repository=myrepos --message="First commit"
+    liquibase data commit --message="First commit"
 
 Verify the commit was successful by executing this command:
 
-    liquibase data log --repository=myrepos
+    liquibase data log
 
 ## Step 5: Generate a changelog
 
@@ -149,7 +154,7 @@ Execute this command:
 
 After changing your database, create a new commit.
 
-    liquibase data commit --repository=myrepos --message="Created new table"
+    liquibase data commit --message="Created new table"
 
 ## Step 9: Verify that you have new commits.
 
@@ -157,15 +162,15 @@ Just like with `git`, you can review previous changes to your database.
 
 Execute this command: 
 
-    liquibase data log --repository=myrepos
+    liquibase data log 
 
 ## Step 10: Rollback to previous commit
 
-You can rollback to previous commits easily. You will need the first commit id. That is listed with the previous command, `liquibase data log --repository=myrepos`
+You can rollback to previous commits easily. You will need the first commit id. That is listed with the previous command, `liquibase data log`
 
 Execute this command: 
 
-    liquibase data checkout --commit=<commit id> --repository=myrepos
+    liquibase data checkout --commit=<commit id> 
 
 ## Step 11: Connect to the database using a tool like DBeaver to verify that no tables exist.
 
@@ -177,11 +182,11 @@ Of course, seeing is believing. Using your favorite database tool (We like DBeav
 
 Once you have seen the initial database version, checkout the latest commit to see your changes. You should now see a single table in your database tool.
 
-You will need the second commit id. That is listed with the previous command, `liquibase data log --repository=myrepos`
+You will need the second commit id. That is listed with the previous command, `liquibase data log`
 
 Execute this command:
 
-    liquibase data checkout --commit=<commit id>--repository=myrepos
+    liquibase data checkout --commit=<commit id>
 
 ## Step 13: Connect to the database using a tool like DBeaver to verify the Liquibase changes are on the database server
 

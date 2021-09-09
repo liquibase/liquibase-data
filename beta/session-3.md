@@ -13,15 +13,15 @@ Tags help you assign human-friendly names to specific commits. They can also be 
 
 To create a tag, identify your last commit id with the following:
 
-    liquibase data log --repository=myrepos
+    liquibase data log
 
 Once you have the commit id, apply a tag with the following command:
 
-    liquibase data tag --repository=myrepos --commit=<commit id> --tags=<tag name>
+    liquibase data tag --commit=<commit id> --tags=<tag name>
 
 Now that you have applied the new tag, you can checkout a specific commit using a tag.
 
-    liquibase data checkout --repository=myrepos --tags=<tag name>
+    liquibase data checkout --tags=<tag name>
 
 Note: If 2 commits have the same tag, titan will check out the most recent commit.
 
@@ -37,7 +37,7 @@ NOTE: Windows users need to update Docker settings to take advantage of Liquibas
 
 First, identify the current commit ID's using the following command:
 
-    liquibase data log --repository=myrepos
+    liquibase data log
 
 Select the commit id that you want to compare against the current state and execute the following command:
 
