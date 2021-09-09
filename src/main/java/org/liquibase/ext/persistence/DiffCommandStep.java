@@ -45,10 +45,6 @@ public class DiffCommandStep extends TitanBase {
         SOURCE_DB = builder.argument("sourceDb", String.class)
                 .description("Name of Source Database")
                 .build();
-//        TARGET_DB = builder.argument("targetDb", String.class)
-//                .description("Name of Target Database")
-//                //.required()
-//                .build();
         SOURCE_STAGE = builder.argument("sourceState", String.class)
                 .description("Commit for Source Database, defaults to current (optional)")
                 .build();
@@ -107,45 +103,34 @@ public class DiffCommandStep extends TitanBase {
         Repository repo = GetRepoInfo(sourceDB);
         String pwd = System.getProperty("user.dir");
         String targetName = "";
-
-        // Target and Source
-        // Checkout sourceState
-        // copy contents
-        // start new container with targetState
-        // checkout targetState
-        // Diff
-
-        // Target only
-        // create commit with auto commit message
-        // copy contents
-        // start new container with current state
-        // checkout targetState
-        // diff
-        // checkout auto commit
-        // delete auto commit
+        String sp = System.getProperty("file.separator");
 
         if (sourceDB != null && targetState != null) {
             if (sourceState != null) {
                 CE.exec(BuildArgs("titan", "checkout", "-c", sourceState, sourceDB));
             }
             if (sourceState == null) {
-                CE.exec(BuildArgs("titan", "commit", "-m", "", sourceDB));
+                CE.exec(BuildArgs("titan", "commit", "-m", "automated diff commit", sourceDB));
             }
 
             // create temp dir .tempdata
-            Path path = Paths.get(pwd + "/.tempdata");
-            Files.createDirectory(path);
+            Path path = Paths.get(pwd + sp + ".tempdata");
+            try {
+                Files.createDirectory(path);
+            } catch (Exception e){
+                this.cleanUp(pwd + sp + ".tempdata");
+                Files.createDirectory(path);
+            }
 
             CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
             CE.exec(BuildArgs("titan", "stop", sourceDB));
 
             // activate volume per mount
-            //Repository repo = GetRepoInfo(targetDB);
             for (TitanVolume vol : GetVolumes(repo)) {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
                 vol.ActivateVolume(repo.getName(), vol.getName());
-                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint"), ".tempdata" ));
+                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint") + sp + ".", pwd + sp + ".tempdata" + sp + vol.getName() ));
                 vol.DeactivateVolume(repo.getName(), vol.getName());
             }
 
@@ -169,12 +154,20 @@ public class DiffCommandStep extends TitanBase {
                 portString = String.valueOf(p);
                 s.close();
             }
-            for (TitanVolume volume: GetVolumes(repo)) {
-                runArgs.add("-v");
-                runArgs.add(pwd + "/.tempdata" + "/" + volume.getName() + ":" + volume.getPath());
-            }
+
             runArgs.add(GetImage(repo).getDigest());
             CE.exec(runArgs);
+
+            //Wait for new container to fully initialize
+            Thread.sleep(3000);
+
+            CE.exec(BuildArgs("docker", "stop", targetName));
+            for (TitanVolume vol: GetVolumes(repo)) {
+                Volume volume = vol.GetVolume(repo.getName(), vol.getName());
+                Map<String, String> config = vol.GetVolumeConfig(volume);
+                CE.exec(BuildArgs("docker", "cp", "-a", pwd + sp + ".tempdata" + sp + vol.getName() + sp + ".", targetName + ":" + vol.getPath() ));
+            }
+            CE.exec(BuildArgs("docker", "start", targetName));
 
             // get URL
             String url = resultsBuilder.getCommandScope().getArgumentValue(URL_ARG);
@@ -213,6 +206,13 @@ public class DiffCommandStep extends TitanBase {
             commandScope.setOutput(resultsBuilder.getOutputStream());
             CommandResults result = commandScope.execute();
         } catch (Exception e) {
+
+            //TODO this can hang
+            if (sourceDB != null && targetState != null) {
+                CE.exec(BuildArgs("docker", "rm", targetName, "-f"));
+            }
+
+            this.cleanUp(pwd + sp + ".tempdata");
             UIService ui = Scope.getCurrentScope().getUI();
             ui.sendErrorMessage(e.getMessage());
             throw new Exception(e);
@@ -221,15 +221,19 @@ public class DiffCommandStep extends TitanBase {
         // Clean Up
         if (sourceDB != null && targetState != null) {
             CE.exec(BuildArgs("docker", "rm", targetName, "-f"));
-            Path path = Paths.get(pwd + "/.tempdata");
-            try (Stream<Path> walk = Files.walk(path)) {
-                walk.sorted(Comparator.reverseOrder()).forEach(this::deleteFiles);
-            }
+            this.cleanUp(pwd + sp + ".tempdata");
             if (sourceState == null) {
                 String commit = GetLatestCommit(sourceDB);
                 CE.exec(BuildArgs("titan", "checkout", "-c", commit, sourceDB));
                 CE.exec(BuildArgs("titan", "delete", "-c", commit, sourceDB));
             }
+        }
+    }
+
+    private void cleanUp(String path) throws IOException {
+        Path p = Paths.get(path);
+        try (Stream<Path> walk = Files.walk(p)) {
+            walk.sorted(Comparator.reverseOrder()).forEach(this::deleteFiles);
         }
     }
 
