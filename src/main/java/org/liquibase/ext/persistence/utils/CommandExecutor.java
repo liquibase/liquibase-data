@@ -29,8 +29,14 @@ public class CommandExecutor {
     }
 
     public void exec(List args) throws InterruptedException, IOException {
+        this.exec(args, true);
+    }
 
-        this.ui.sendMessage("----------------------------------------------------------------------");
+    public void exec(List args, Boolean showOutput) throws InterruptedException, IOException {
+
+        if (showOutput) {
+            this.ui.sendMessage("----------------------------------------------------------------------");
+        }
 
         ProcessBuilder builder = new ProcessBuilder();
         builder.command(args);
@@ -43,7 +49,9 @@ public class CommandExecutor {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ( (line = reader.readLine()) != null) {
-                this.ui.sendMessage(line);
+                if (showOutput) {
+                    this.ui.sendMessage(line);
+                }
             }
 
             if (process.isAlive()) {
@@ -54,7 +62,9 @@ public class CommandExecutor {
                 BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
                 String errLine;
                 while ( (errLine = errReader.readLine()) != null) {
-                    this.ui.sendErrorMessage(errLine);
+                    if (showOutput) {
+                        this.ui.sendErrorMessage(errLine);
+                    }
                 }
                 throw new IOException("Command failed: " + this.stringify(args) + ": " + "");
             }
@@ -63,7 +73,9 @@ public class CommandExecutor {
             }
         } finally {
             process.destroy();
-            this.ui.sendMessage(System.getProperty("line.separator"));
+            if (showOutput) {
+                this.ui.sendMessage(System.getProperty("line.separator"));
+            }
         }
     }
 
