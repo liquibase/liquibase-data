@@ -118,14 +118,14 @@ public class DiffCommandStep extends TitanBase {
             }
 
             CE.exec(BuildArgs("titan", "checkout", "-c", targetState, sourceDB));
-            CE.exec(BuildArgs("titan", "stop", sourceDB));
+            CE.exec(BuildArgs("titan", "stop", sourceDB), false);
 
             // activate volume per mount
             for (TitanVolume vol : GetVolumes(repo)) {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
                 vol.ActivateVolume(repo.getName(), vol.getName());
-                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint") + sp + ".", pwd + sp + ".tempdata" + sp + vol.getName() ));
+                CE.exec(BuildArgs("docker", "cp", "-a", "titan-docker-server:" + config.get("mountpoint") + sp + ".", pwd + sp + ".tempdata" + sp + vol.getName() ), false);
                 vol.DeactivateVolume(repo.getName(), vol.getName());
             }
 
@@ -151,18 +151,18 @@ public class DiffCommandStep extends TitanBase {
             }
 
             runArgs.add(GetImage(repo).getDigest());
-            CE.exec(runArgs);
+            CE.exec(runArgs, false);
 
             //Wait for new container to fully initialize
             Thread.sleep(3000);
 
-            CE.exec(BuildArgs("docker", "stop", targetName));
+            CE.exec(BuildArgs("docker", "stop", targetName), false);
             for (TitanVolume vol: GetVolumes(repo)) {
                 Volume volume = vol.GetVolume(repo.getName(), vol.getName());
                 Map<String, String> config = vol.GetVolumeConfig(volume);
-                CE.exec(BuildArgs("docker", "cp", "-a", pwd + sp + ".tempdata" + sp + vol.getName() + sp + ".", targetName + ":" + vol.getPath() ));
+                CE.exec(BuildArgs("docker", "cp", "-a", pwd + sp + ".tempdata" + sp + vol.getName() + sp + ".", targetName + ":" + vol.getPath() ), false);
             }
-            CE.exec(BuildArgs("docker", "start", targetName));
+            CE.exec(BuildArgs("docker", "start", targetName), false);
 
             // get URL
             String url = resultsBuilder.getCommandScope().getArgumentValue(URL_ARG);
@@ -176,8 +176,6 @@ public class DiffCommandStep extends TitanBase {
                     REFERENCE_URL_ARG,
                     urlHelper.toString()
             );
-
-            CE.exec(BuildArgs("titan", "start", sourceDB));
 
             if (sourceState != null) {
                 CE.exec(BuildArgs("titan", "checkout", "-c", sourceState, sourceDB));
