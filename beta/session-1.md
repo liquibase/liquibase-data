@@ -31,7 +31,7 @@ Download and install the latest version of [Docker Desktop Community.](https://w
 
 ## Step 2: Install Titan
 
-Titan can be downloaded from [here.](https://github.com/titan-data/titan/releases/tag/0.5.2)
+Titan can be downloaded from [here.](https://github.com/titan-data/titan/releases/)
 
 > Titan is an open source data version project that Liquibase is working closely with.
 
