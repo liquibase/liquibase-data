@@ -8,8 +8,8 @@ For a tutorial on how to use Liquibase Data, please join our [Open Beta Program]
 
 ## Getting Started
 ### Requirements
-*  [Liquibase 4.4.3](https://github.com/liquibase/liquibase/releases)
-*  [Titan 0.5.2](https://github.com/titan-data/titan/releases)
+*  [Liquibase](https://github.com/liquibase/liquibase/releases)
+*  [Titan](https://github.com/titan-data/titan/releases)
 
 ## Installation
 Download the latest [release](https://github.com/liquibase/liquibase-data/releases) and extract the contents to `LIQUIBASE/lib`.
