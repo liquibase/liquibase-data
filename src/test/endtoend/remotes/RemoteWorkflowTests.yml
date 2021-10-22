@@ -1,0 +1,61 @@
+tests:
+  - "$REMOTE > remote > add":
+      command: liquibase data remote add --remote $REMOTE --uri $URI --repository $REPO
+      env:
+        get:
+          - URI
+          - REPO
+          - REMOTE
+  - "$REMOTE > remote > ls > has $REMOTE":
+      command: liquibase data remote ls --repository $REPO
+      stderr:
+        contains: $URI
+      env:
+        get:
+          - URI
+          - REPO
+          - REMOTE
+  - "$REMOTE > commit":
+      command: [liquibase, data, commit, --message, Test $REMOTE Commit, --repository, $REPO]
+      stderr:
+        contains: Commit
+      env:
+        get:
+          - REPO
+          - REMOTE
+        set:
+          - COMMIT_GUID:
+              after:
+                after: "Commit "
+  - "$REMOTE > remote > log > missing commit":
+      command: liquibase data remote log --repository $REPO
+      stderr:
+        excludes: Commit $COMMIT_GUID
+      env:
+        get:
+          - COMMIT_GUID
+          - REPO
+          - REMOTE
+  - "$REMOTE > push":
+      command: [liquibase, data, push, --remote, $REMOTE, --commit, $COMMIT_GUID, --repository, $REPO]
+      stderr:
+        contains:
+          - Pushing $COMMIT_GUID to '$REMOTE'
+          - Push completed successfully
+      env:
+        get:
+          - COMMIT_GUID
+          - REPO
+          - REMOTE
+  - "$REMOTE > remote > log > has commit":
+      command: liquibase data remote log --repository $REPO
+      stderr:
+        contains: Commit $COMMIT_GUID
+      env:
+        get:
+          - COMMIT_GUID
+          - URI
+          - REPO
+          - REMOTE
+after:
+  clearVars: true
