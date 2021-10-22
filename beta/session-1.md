@@ -6,11 +6,10 @@ Over the next hour, you will configure your computer to begin versioning a datab
 
 > After completing the Session, please provide feedback [here.](https://forms.gle/6XSpqG7WrRsCNTrh7)
 
-# Install Titan, Liquibase, and Liquibase-Titan Wrapper 
+# Install Docker, Liquibase, and Liquibase Data Extension 
 
 **IMPORTANT NOTES**
 
-- We currently do not support Docker on the Apple M1 Chip. 
 - Be aware that if you uninstall your current version of Docker to reinstall, the uninstall process will remove your images and volumes on your machine.
 
 ## Step 1: Install Docker Desktop Community
@@ -29,22 +28,7 @@ Download and install the latest version of [Docker Desktop Community.](https://w
 
 ![Image of Mac Docker Settings](images/docker_mac_settings.jpg)
 
-## Step 2: Install Titan
-
-Titan can be downloaded from [here.](https://github.com/titan-data/titan/releases/)
-
-> Titan is an open source data version project that Liquibase is working closely with.
-
-1. Select the Titan version for your OS using the link above and install.
-2. Add titan native binary to your system path.
-> Mac will require you to go to Security & Privacy settings and allow the downloaded Titan to run.
-3. Run `titan install`. 
-4. Run `docker ps`. 
->You will see two titan containers (titan-docker-server and titan-docker-launch) running. Make sure they are ‘running’ and not ‘restarting’.
-
-> For assistance, questions, or comments, please contact us via [Discord.](https://discord.gg/NVpqM7nNnT)
-
-## Step 3: Install Liquibase 4.4.3
+## Step 2: Install Liquibase 4.4.3
 
 Liquibase can be downloaded from [here.]( (https://github.com/liquibase/liquibase/releases/tag/v4.4.3)). If you have previously installed Liquibase, verify that it is version 4.4.3 using `liquibase --version`.
 
@@ -52,14 +36,16 @@ Liquibase can be downloaded from [here.]( (https://github.com/liquibase/liquibas
 
 Note: The Liquibase Data extension is certified for Liquibase 4.4.3.
 
-## Step 4: Validate your Titan installation
-
-Read through [this quick start tutorial.](https://titan-data.io/getting-started)
-
-## Step 5: Download Liquibase Data extension and add to your system path.
+## Step 3: Download Liquibase Data extension and add to your system path.
 
 1. Download the latest [Liquibase Data extension.](https://github.com/liquibase/liquibase-data/releases) 
 2. Copy the `liquibase-data` jar file to `LIQUIBASE/lib`.
+3. Run `liquibase data install`.
+4. Run `docker ps`.
+>You will see two titan containers (titan-docker-server and titan-docker-launch) running. Make sure they are ‘running’ and not ‘restarting’.
+
+> For assistance, questions, or comments, please contact us via [Discord.](https://discord.gg/NVpqM7nNnT)
+
 
 > Mac will require you to go to Security & Privacy settings and allow the downloaded Liquibase Data extension to be accessed.
 
