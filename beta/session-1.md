@@ -42,7 +42,7 @@ Note: The Liquibase Data extension is certified for Liquibase 4.4.3.
 2. Copy the `liquibase-data` jar file to `LIQUIBASE/lib`.
 3. Run `liquibase data install`.
 4. Run `docker ps`.
->You will see two titan containers (titan-docker-server and titan-docker-launch) running. Make sure they are ‘running’ and not ‘restarting’.
+>You will see two containers (titan-docker-server and titan-docker-launch) running. Make sure they are ‘running’ and not ‘restarting’.
 
 > For assistance, questions, or comments, please contact us via [Discord.](https://discord.gg/NVpqM7nNnT)
 
@@ -73,7 +73,7 @@ NOTE: The repository name can be anything you would like. For the following step
 
 ## Step 3: Create a new data repository from a blank Docker database
 
-Think of this step as your `git init` for the versioned database. The following command will start a PostgreSQL Docker container and allow Titan to manage versions for the container. 
+Think of this step as your `git init` for the versioned database. The following command will start a PostgreSQL Docker container and allow Liquibase Data to manage versions for the container. 
 
 > Your repository name can be anything you would like. We are going to use `myreps`. Feel free to change that to whatever you would like!
 
