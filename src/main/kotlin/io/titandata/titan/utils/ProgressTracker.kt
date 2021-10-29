@@ -20,7 +20,11 @@ class ProgressTracker {
     }
 
     private fun getStyle(): ProgressBarStyle {
-        val term = System.getenv("TERM")
+        val term = try {
+             System.getenv("TERM")
+        } finally {
+            ""
+        }
         // TODO get better list of switches
         return when {
             term.contains("xterm") -> ProgressBarStyle.COLORFUL_UNICODE_BLOCK
