@@ -90,7 +90,7 @@ Verify the repository exists by executing this command:
 
 ## Step 4: Commit your empty database to the repository
 
-On your first commit, you will be committing an empty database and creating a baseline for your future commits.
+On your first commit, you will be committing an empty database and creating a baseline for your future commits. When creating commits, liquibase data will use your git configuration to determine the name and email address to use by running `git config user.name` and `git config user.email`. If you have not configured git before, you can run `git config --global user.name <name>` and git `config --global user.email <email>` to set these values.
 
 Execute this command: 
 
