@@ -9,7 +9,7 @@ Over the next hour, you will build on your experience from Session 1 and Session
 
 # Step 1: Tag Database Changes
 
-Tags help you assign human-friendly names to specific commits. They can also be "floating tags" so that you are able to mark a commit as a "golden database" for standardized testing and development. Tags in Titan are strings with no spaces. Multiple tags (e.g., -t foo -t bar) are acceptable. Tags are applied to a previously applied commit.
+Tags help you assign human-friendly names to specific commits. They can also be "floating tags" so that you are able to mark a commit as a "golden database" for standardized testing and development. Tags in Liquibase Data are strings with no spaces. Multiple tags (e.g., -t foo -t bar) are acceptable. Tags are applied to a previously applied commit.
 
 To create a tag, identify your last commit id with the following:
 
@@ -23,7 +23,7 @@ Now that you have applied the new tag, you can checkout a specific commit using 
 
     liquibase data checkout --tags=<tag name>
 
-Note: If 2 commits have the same tag, titan will check out the most recent commit.
+Note: If 2 commits have the same tag, Liquibase Data will check out the most recent commit.
 
 # Step 2: Liquibase Data Diff
 
