@@ -11,7 +11,6 @@ With Liquibase Data, you can version containerized databases, share changes with
 ## Getting Started
 ### Requirements
 *  [Liquibase](https://github.com/liquibase/liquibase/releases)
-*  [Titan](https://github.com/titan-data/titan/releases)
 
 ## Installation
 Download the latest [release](https://github.com/liquibase/liquibase-data/releases) and extract the contents to `LIQUIBASE/lib`.
