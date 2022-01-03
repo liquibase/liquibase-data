@@ -16,7 +16,7 @@
         <main.class>io.titandata.titan.Cli</main.class>
         <jacoco.version>0.8.7</jacoco.version>
         <mockito.version>3.2.0</mockito.version>
-        <okhttp.version>4.9.2</okhttp.version>
+        <okhttp.version>4.9.3</okhttp.version>
     </properties>
 
     <licenses>
