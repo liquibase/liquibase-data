@@ -75,7 +75,7 @@ NOTE: The repository name can be anything you would like. For the following step
 
 Think of this step as your `git init` for the versioned database. The following command will start a PostgreSQL Docker container and allow Liquibase Data to manage versions for the container. 
 
-> Your repository name can be anything you would like. We are going to use `myreps`. Feel free to change that to whatever you would like!
+> Your repository name can be anything you would like. We are going to use `myrepos`. Feel free to change that to whatever you would like!
 
 Execute this command: 
 
