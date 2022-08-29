@@ -44,7 +44,7 @@ import liquibase.Scope
 import liquibase.ui.UIService
 
 class Local(val contextName: String = "docker", val host: String = "localhost", val portNum: Int = 5001) : Provider {
-    private val titanServerVersion = "0.8.6"
+    private val titanServerVersion = "0.8.7"
     private val dockerRegistryUrl = "titandata"
     private val uri = "http://$host:$portNum"
 
