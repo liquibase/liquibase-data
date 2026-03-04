@@ -102,4 +102,4 @@ Please report all issues and suggestions [here](https://github.com/liquibase/liq
 Want to file a bug or improve documentation? Excellent! Read up on our guidelines for [contributing](https://www.liquibase.org/community/index.html)!
 
 ## License
-Liquibase is [licensed under the Apache 2.0 License](https://github.com/liquibase/liquibase-data/blob/main/LICENSE).
+Liquibase is [licensed under the FSL-1.1-ALv2 License](https://github.com/liquibase/liquibase-data/blob/main/LICENSE).
